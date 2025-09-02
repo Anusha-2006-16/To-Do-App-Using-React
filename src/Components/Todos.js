@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Addtodoitems from './Addtodoitems';
 import './Style.css'
 
@@ -6,8 +6,20 @@ const Todos = () => {
 
     const[title,setTitle]=useState("");
     const [desc,setDesc]=useState("");
-    const[todos,setTodos]=useState([]);
-    const[id,setId]=useState(0);
+    const[todos,setTodos]=useState(()=>{
+      const savedNotes=localStorage.getItem("todo");
+      return savedNotes?JSON.parse(savedNotes):[];
+});
+    const[id,setId]=useState(
+      ()=>{
+        const savedNotes=localStorage.getItem("todo");
+        if(savedNotes){
+          const parsed=JSON.parse(savedNotes);
+          return parsed.length>0?parsed[parsed.length-1].id+1:0;
+        }
+        return 0;
+      }
+    );
     const[editId,setEditId]=useState(null);
 
     const handleTitle=(e)=>{
@@ -57,6 +69,9 @@ setDesc("");
     setDesc(todo.desc);
     setEditId(todo.id);
    }
+   useEffect(()=>{
+    localStorage.setItem("todo",JSON.stringify(todos));
+   },[todos]);
   return (
    <>
     <div className='conatiner my-2' style={{margin:"auto",width:"800px"}} >
