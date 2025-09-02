@@ -1,0 +1,10 @@
+.todo_items {
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* responsive cards */
+  gap: 20px; /* spacing between items */
+  max-width: 1000px; /* keeps layout centered */
+  padding: 10px;
+  /* color: rgb(223, 203, 249); */
+  /* background-color: rgb(219, 227, 234); */
+}
